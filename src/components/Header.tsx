@@ -1,5 +1,6 @@
 import Link from "next/link";
 import { EVENT, NAV_LINKS } from "@/lib/data";
+import ShareButton from "./ShareButton";
 
 export default function Header() {
   return (
@@ -26,12 +27,15 @@ export default function Header() {
           ))}
         </nav>
 
-        <a
-          href="#registration"
-          className="rounded-full bg-gradient-to-r from-accent-purple to-accent-green px-5 py-2 text-sm font-medium text-white shadow-lg shadow-accent-green/20 transition-transform hover:scale-105"
-        >
-          立即报名
-        </a>
+        <div className="flex items-center gap-2">
+          <ShareButton />
+          <a
+            href="#registration"
+            className="rounded-full bg-gradient-to-r from-accent-purple to-accent-green px-5 py-2 text-sm font-medium text-white shadow-lg shadow-accent-green/20 transition-transform hover:scale-105"
+          >
+            立即报名
+          </a>
+        </div>
       </div>
     </header>
   );
