@@ -1,5 +1,6 @@
 import Header from "@/components/Header";
 import Hero from "@/components/Hero";
+import Drivers from "@/components/Drivers";
 import Venue from "@/components/Venue";
 import PrizePool from "@/components/PrizePool";
 import LapTimeBoard from "@/components/LapTimeBoard";
@@ -13,6 +14,7 @@ export default function Home() {
       <Header />
       <main className="flex-1">
         <Hero />
+        <Drivers />
         <Venue />
         <PrizePool />
         <LapTimeBoard />

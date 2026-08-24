@@ -59,6 +59,9 @@ export default function DriverProfileModal({
             <h3 className="truncate font-display text-2xl font-bold">
               {driver.name}
             </h3>
+            <p className="mt-0.5 text-sm text-foreground-muted">
+              {driver.nationality}
+            </p>
           </div>
         </div>
 
