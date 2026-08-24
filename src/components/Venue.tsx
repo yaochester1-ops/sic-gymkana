@@ -1,4 +1,3 @@
-import Image from "next/image";
 import { VENUE } from "@/lib/data";
 
 export default function Venue() {
@@ -19,12 +18,11 @@ export default function Venue() {
 
         <div className="card-surface overflow-hidden rounded-2xl">
           <div className="relative h-64 w-full sm:h-80">
-            <Image
+            {/* eslint-disable-next-line @next/next/no-img-element */}
+            <img
               src={VENUE.photo}
               alt={`${VENUE.name} 实景鸟瞰图`}
-              fill
-              className="object-cover"
-              priority
+              className="absolute inset-0 h-full w-full object-cover"
             />
             <div className="absolute inset-0 bg-gradient-to-t from-background via-background/10 to-transparent" />
             <div className="absolute bottom-4 left-6 right-6 flex flex-wrap items-end justify-between gap-3">

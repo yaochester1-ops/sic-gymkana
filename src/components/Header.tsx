@@ -6,8 +6,8 @@ export default function Header() {
     <header className="sticky top-0 z-50 border-b border-border/80 bg-background/80 backdrop-blur-md">
       <div className="mx-auto flex max-w-6xl items-center justify-between px-6 py-4">
         <Link href="#home" className="flex items-center gap-2">
-          <span className="flex h-9 w-9 items-center justify-center rounded-lg bg-gradient-to-br from-accent-purple to-accent-green font-display text-lg font-bold text-white">
-            13
+          <span className="flex h-9 min-w-9 items-center justify-center rounded-lg bg-gradient-to-br from-accent-purple to-accent-green px-1.5 font-display text-sm font-bold tracking-wide text-white">
+            SIC
           </span>
           <span className="font-display text-lg font-semibold tracking-wide">
             {EVENT.shortName}

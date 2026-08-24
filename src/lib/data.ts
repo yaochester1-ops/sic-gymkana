@@ -17,7 +17,7 @@ export const VENUE = {
   englishName: "Shijiazhuang International Circuit",
   city: "河北省 · 石家庄",
   addressNote: "详细门牌地址待公布",
-  photo: "/venue-photo.jpg",
+  photo: "https://raw.githubusercontent.com/yaochester1-ops/sic-gymkana/main/public/venue-photo.jpg",
   mapUrl: "https://www.amap.com/place/B0M6TR65LR",
 };
 

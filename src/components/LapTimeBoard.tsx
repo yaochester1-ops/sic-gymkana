@@ -22,7 +22,38 @@ export default function LapTimeBoard() {
           </p>
         </div>
 
-        <div className="card-surface overflow-x-auto rounded-2xl">
+        {/* 手机端：卡片列表，避免最佳圈速被挤出屏幕外还看不出能滑动 */}
+        <div className="card-surface divide-y divide-border/60 rounded-2xl sm:hidden">
+          {DRIVERS.map((driver) => (
+            <div key={driver.rank} className="flex items-center gap-3 px-4 py-3">
+              <span
+                className={`flex h-8 w-8 shrink-0 items-center justify-center rounded-full font-display text-sm font-bold ${
+                  RANK_STYLES[driver.rank] ??
+                  "bg-background-elevated text-foreground-muted"
+                }`}
+              >
+                {driver.rank}
+              </span>
+              <div className="min-w-0 flex-1">
+                <div className="flex items-center gap-2">
+                  <span className="flex h-7 w-7 shrink-0 items-center justify-center rounded-full bg-gradient-to-br from-accent-purple/30 to-accent-green/30 font-display text-[10px] font-semibold text-foreground">
+                    #{driver.number}
+                  </span>
+                  <span className="truncate font-medium">{driver.name}</span>
+                </div>
+                <p className="mt-0.5 truncate text-xs text-foreground-muted">
+                  {driver.carModel} · {driver.penalty}
+                </p>
+              </div>
+              <div className="shrink-0 text-right font-display text-base font-semibold text-gradient">
+                {driver.bestLap}
+              </div>
+            </div>
+          ))}
+        </div>
+
+        {/* 平板与桌面：完整表格 */}
+        <div className="card-surface hidden overflow-x-auto rounded-2xl sm:block">
           <table className="w-full min-w-[640px] border-collapse text-left">
             <thead>
               <tr className="border-b border-border text-xs uppercase tracking-wide text-foreground-muted">
