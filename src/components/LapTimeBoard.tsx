@@ -1,4 +1,8 @@
-import { DRIVERS } from "@/lib/data";
+"use client";
+
+import { useState } from "react";
+import { DRIVERS, type DriverEntry } from "@/lib/data";
+import DriverProfileModal from "./DriverProfileModal";
 
 const RANK_STYLES: Record<number, string> = {
   1: "bg-gradient-to-r from-accent-gold/90 to-accent-gold/60 text-black",
@@ -7,6 +11,10 @@ const RANK_STYLES: Record<number, string> = {
 };
 
 export default function LapTimeBoard() {
+  const [selectedDriver, setSelectedDriver] = useState<DriverEntry | null>(
+    null
+  );
+
   return (
     <section id="leaderboard" className="border-b border-border px-6 py-20">
       <div className="mx-auto max-w-5xl">
@@ -18,14 +26,19 @@ export default function LapTimeBoard() {
             车手圈速榜
           </h2>
           <p className="mt-3 text-sm text-foreground-muted">
-            示例占位数据，正式成绩将于赛后同步更新（按最佳圈速排名，用时越短排名越高）
+            示例占位数据，正式成绩将于赛后同步更新（按最佳圈速排名，用时越短排名越高，点击车手查看简历）
           </p>
         </div>
 
         {/* 手机端：卡片列表，避免最佳圈速被挤出屏幕外还看不出能滑动 */}
         <div className="card-surface divide-y divide-border/60 rounded-2xl sm:hidden">
           {DRIVERS.map((driver) => (
-            <div key={driver.rank} className="flex items-center gap-3 px-4 py-3">
+            <button
+              key={driver.rank}
+              type="button"
+              onClick={() => setSelectedDriver(driver)}
+              className="flex w-full items-center gap-3 px-4 py-3 text-left transition-colors hover:bg-white/[0.02]"
+            >
               <span
                 className={`flex h-8 w-8 shrink-0 items-center justify-center rounded-full font-display text-sm font-bold ${
                   RANK_STYLES[driver.rank] ??
@@ -48,7 +61,7 @@ export default function LapTimeBoard() {
               <div className="shrink-0 text-right font-display text-base font-semibold text-gradient">
                 {driver.bestLap}
               </div>
-            </div>
+            </button>
           ))}
         </div>
 
@@ -68,7 +81,8 @@ export default function LapTimeBoard() {
               {DRIVERS.map((driver) => (
                 <tr
                   key={driver.rank}
-                  className="border-b border-border/60 last:border-b-0 hover:bg-white/[0.02]"
+                  onClick={() => setSelectedDriver(driver)}
+                  className="cursor-pointer border-b border-border/60 last:border-b-0 hover:bg-white/[0.02]"
                 >
                   <td className="px-6 py-4">
                     <span
@@ -103,6 +117,11 @@ export default function LapTimeBoard() {
           </table>
         </div>
       </div>
+
+      <DriverProfileModal
+        driver={selectedDriver}
+        onClose={() => setSelectedDriver(null)}
+      />
     </section>
   );
 }
