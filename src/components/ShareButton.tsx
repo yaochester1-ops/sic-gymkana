@@ -5,7 +5,7 @@ import { createPortal } from "react-dom";
 import QRCode from "qrcode";
 import { EVENT } from "@/lib/data";
 
-const SITE_URL = "https://sic-gymkana.vercel.app";
+const SITE_URL = "https://sicgymkana.com";
 
 const X_SHARE_URL = `https://twitter.com/intent/tweet?url=${encodeURIComponent(
   SITE_URL

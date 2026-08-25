@@ -16,7 +16,7 @@ export default function LapTimeBoard() {
   );
 
   return (
-    <section id="leaderboard" className="border-b border-border px-6 py-20">
+    <section id="leaderboard" className="px-6 py-20">
       <div className="mx-auto max-w-5xl">
         <div className="mb-10 text-center">
           <span className="text-xs font-medium uppercase tracking-[0.2em] text-accent-green-light">

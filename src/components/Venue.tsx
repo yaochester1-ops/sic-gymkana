@@ -2,7 +2,7 @@ import { VENUE } from "@/lib/data";
 
 export default function Venue() {
   return (
-    <section id="venue" className="border-b border-border px-6 py-20">
+    <section id="venue" className="px-6 py-20">
       <div className="mx-auto max-w-5xl">
         <div className="mb-10 text-center">
           <span className="text-xs font-medium uppercase tracking-[0.2em] text-accent-purple-light">

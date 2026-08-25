@@ -43,7 +43,7 @@ export default function PrizePool() {
   const digits = displayValue.toLocaleString("zh-CN").split("");
 
   return (
-    <section id="prize-pool" className="border-b border-border px-6 py-20">
+    <section id="prize-pool" className="px-6 py-20">
       <div
         ref={sectionRef}
         className="card-surface mx-auto flex max-w-2xl flex-col items-center rounded-2xl px-8 py-12 text-center"
