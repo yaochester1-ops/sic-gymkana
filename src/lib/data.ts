@@ -28,10 +28,10 @@ export const REGISTRATION = {
   deadlineNote: "报名截止时间待公布",
 };
 
-// 滚动奖池金额（人民币元）—— 目前是占位金额，之后替换为真实数字即可
+// 滚动奖池金额（人民币元）—— 从 0 起步，随报名人数增加自动增长，报名数据接入后替换即可
 export const PRIZE_POOL = {
-  amountCNY: 100000,
-  updatedNote: "奖池金额随赛事进程持续更新",
+  amountCNY: 0,
+  updatedNote: "奖池金额将随报名人数增加持续增长",
 };
 
 // 车手圈速榜 —— 示例占位数据，拿到真实车手成绩后按同样结构替换即可
