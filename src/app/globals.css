@@ -93,7 +93,7 @@ body {
 .gun-blast {
   position: absolute;
   left: 50%;
-  bottom: 96px;
+  bottom: 112px;
   font-size: 1.4rem;
   line-height: 1;
   filter: drop-shadow(0 0 4px rgba(134, 239, 172, 0.5));
