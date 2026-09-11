@@ -79,11 +79,11 @@ body {
     opacity: 1;
   }
   48% {
-    transform: translate(calc(-50% + var(--drift, 0px)), -68px) rotate(var(--spin, 15deg)) scale(1);
+    transform: translate(calc(-50% + var(--drift, 0px)), -58px) rotate(var(--spin, 15deg)) scale(1);
     opacity: 1;
   }
   100% {
-    transform: translate(calc(-50% + var(--drift, 0px) * 1.7), 46px) rotate(calc(var(--spin, 15deg) * 2)) scale(0.65);
+    transform: translate(calc(-50% + var(--drift, 0px) * 1.7), 38px) rotate(calc(var(--spin, 15deg) * 2)) scale(0.65);
     opacity: 0;
   }
 }
@@ -91,8 +91,8 @@ body {
 .money-particle {
   position: absolute;
   left: 50%;
-  bottom: 14px;
-  font-size: 1.1rem;
+  bottom: 66px;
+  font-size: 1.2rem;
   line-height: 1;
   animation: money-spray 2.6s ease-in infinite;
   will-change: transform, opacity;

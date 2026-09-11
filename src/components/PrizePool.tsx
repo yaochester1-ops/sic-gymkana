@@ -7,18 +7,20 @@ function easeOutExpo(t: number) {
   return t === 1 ? 1 : 1 - Math.pow(2, -10 * t);
 }
 
-// 喷泉撒钱粒子：从底部喷出的纸钞/硬币，drift 控制左右偏移，spin 控制旋转，delay 错开节奏
+// 喷泉撒钱粒子：从喷泉顶部喷口喷出的纸钞/硬币，drift 控制左右偏移，spin 控制旋转，delay 错开节奏
 const MONEY_PARTICLES = [
-  { emoji: "💴", drift: -70, spin: -20, delay: 0 },
-  { emoji: "🪙", drift: -42, spin: 18, delay: 0.22 },
-  { emoji: "💴", drift: -16, spin: -12, delay: 0.44 },
-  { emoji: "🪙", drift: 8, spin: 22, delay: 0.66 },
-  { emoji: "💴", drift: 34, spin: -16, delay: 0.88 },
-  { emoji: "🪙", drift: 62, spin: 12, delay: 1.1 },
-  { emoji: "💴", drift: -52, spin: 26, delay: 1.32 },
-  { emoji: "🪙", drift: 2, spin: -26, delay: 1.54 },
-  { emoji: "💴", drift: 48, spin: 16, delay: 1.76 },
-  { emoji: "🪙", drift: -24, spin: 10, delay: 1.98 },
+  { emoji: "💴", drift: -78, spin: -20, delay: 0 },
+  { emoji: "🪙", drift: -55, spin: 18, delay: 0.18 },
+  { emoji: "💴", drift: -32, spin: -12, delay: 0.36 },
+  { emoji: "🪙", drift: -10, spin: 22, delay: 0.54 },
+  { emoji: "💴", drift: 12, spin: -16, delay: 0.72 },
+  { emoji: "🪙", drift: 34, spin: 12, delay: 0.9 },
+  { emoji: "💴", drift: 58, spin: 26, delay: 1.08 },
+  { emoji: "🪙", drift: 78, spin: -26, delay: 1.26 },
+  { emoji: "💴", drift: -20, spin: 16, delay: 1.44 },
+  { emoji: "🪙", drift: 20, spin: -10, delay: 1.62 },
+  { emoji: "💴", drift: -45, spin: 14, delay: 1.8 },
+  { emoji: "🪙", drift: 45, spin: -18, delay: 1.98 },
 ];
 
 export default function PrizePool() {
@@ -60,7 +62,7 @@ export default function PrizePool() {
     <section id="prize-pool" className="px-6 py-20">
       <div
         ref={sectionRef}
-        className="card-surface relative mx-auto flex max-w-2xl flex-col items-center overflow-hidden rounded-2xl px-8 pb-32 pt-12 text-center"
+        className="card-surface relative mx-auto flex max-w-2xl flex-col items-center overflow-hidden rounded-2xl px-8 pb-40 pt-12 text-center"
       >
         <span className="text-xs font-medium uppercase tracking-[0.2em] text-foreground-muted">
           滚动奖池
@@ -84,10 +86,10 @@ export default function PrizePool() {
           {PRIZE_POOL.updatedNote}
         </p>
 
-        {/* 喷泉撒钱动画：纸钞/硬币从底部持续喷出，随报名人数增长的寓意 */}
+        {/* 喷泉撒钱动画：纸钞/硬币从喷泉顶部喷口持续喷出，随报名人数增长的寓意 */}
         <div
           aria-hidden="true"
-          className="pointer-events-none absolute inset-x-0 bottom-0 h-32 overflow-hidden"
+          className="pointer-events-none absolute inset-x-0 bottom-0 h-40 overflow-visible"
         >
           {MONEY_PARTICLES.map((p, i) => (
             <span
@@ -104,9 +106,51 @@ export default function PrizePool() {
               {p.emoji}
             </span>
           ))}
-          <div className="absolute inset-x-0 bottom-2 flex justify-center">
-            <div className="fountain-base h-2 w-14 rounded-full bg-gradient-to-r from-accent-purple to-accent-green blur-[2px]" />
-          </div>
+
+          {/* 喷泉造型：底座水盆 + 泉柱 + 上层水盆 + 喷口 */}
+          <svg
+            viewBox="0 0 120 90"
+            className="absolute bottom-0 left-1/2 h-20 w-28 -translate-x-1/2"
+          >
+            <defs>
+              <linearGradient id="fountainGradient" x1="0%" y1="0%" x2="100%" y2="100%">
+                <stop offset="0%" stopColor="#9333ea" />
+                <stop offset="100%" stopColor="#22c55e" />
+              </linearGradient>
+            </defs>
+            {/* 底座水盆 */}
+            <path
+              d="M14 80 C14 68 30 60 60 60 C90 60 106 68 106 80 C106 86 90 90 60 90 C30 90 14 86 14 80 Z"
+              fill="url(#fountainGradient)"
+              opacity="0.9"
+            />
+            <ellipse
+              className="fountain-base"
+              cx="60"
+              cy="80"
+              rx="46"
+              ry="7"
+              fill="url(#fountainGradient)"
+            />
+            {/* 泉柱 */}
+            <rect x="54" y="34" width="12" height="28" rx="3" fill="url(#fountainGradient)" />
+            {/* 上层水盆 */}
+            <path
+              d="M40 34 C40 29 48 25 60 25 C72 25 80 29 80 34 C80 38 72 40 60 40 C48 40 40 38 40 34 Z"
+              fill="url(#fountainGradient)"
+              opacity="0.9"
+            />
+            <ellipse
+              className="fountain-base"
+              cx="60"
+              cy="34"
+              rx="22"
+              ry="4.5"
+              fill="url(#fountainGradient)"
+            />
+            {/* 喷口 */}
+            <rect x="56" y="10" width="8" height="18" rx="3" fill="url(#fountainGradient)" />
+          </svg>
         </div>
       </div>
     </section>
