@@ -21,10 +21,8 @@ export const VENUE = {
   mapUrl: "https://www.amap.com/place/B0M6TR65LR",
 };
 
-// 报名通道：目前是占位链接，拿到真实报名链接（问卷星 / 腾讯问卷等）后替换 url 即可
+// 报名通道：目前是纯前端演示表单，提交后仅在浏览器本地生成车手证，不会保存或上传数据
 export const REGISTRATION = {
-  url: "#",
-  isPlaceholder: true,
   deadlineNote: "报名截止时间待公布",
 };
 

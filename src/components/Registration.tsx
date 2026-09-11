@@ -1,4 +1,5 @@
 import { REGISTRATION } from "@/lib/data";
+import RegistrationForm from "./RegistrationForm";
 
 export default function Registration() {
   return (
@@ -8,21 +9,15 @@ export default function Registration() {
           准备好上赛道了吗？
         </h2>
         <p className="mx-auto mt-4 max-w-md text-sm leading-relaxed text-foreground-muted">
-          填写报名信息，加入飞驰十三金卡纳，与全国顶尖车手同场竞速。
+          填写报名信息，加入飞驰十三金卡纳，与全国顶尖车手同场竞速。提交后立即生成你的专属车手证。
         </p>
 
-        <a
-          href={REGISTRATION.url}
-          target={REGISTRATION.isPlaceholder ? undefined : "_blank"}
-          rel={REGISTRATION.isPlaceholder ? undefined : "noopener noreferrer"}
-          className="mt-8 inline-block rounded-full bg-gradient-to-r from-accent-purple to-accent-green px-10 py-3 text-sm font-semibold text-white shadow-lg shadow-accent-green/25 transition-transform hover:scale-105"
-        >
-          前往报名通道
-        </a>
+        <div className="mt-8">
+          <RegistrationForm />
+        </div>
 
-        <p className="mt-4 text-xs text-foreground-muted">
-          {REGISTRATION.deadlineNote}
-          {REGISTRATION.isPlaceholder && "（报名链接即将开放）"}
+        <p className="mt-6 text-xs text-foreground-muted">
+          {REGISTRATION.deadlineNote}（当前为演示报名，不会保存或提交你的信息）
         </p>
       </div>
     </section>

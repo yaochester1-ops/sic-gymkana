@@ -1,11 +1,20 @@
 import Link from "next/link";
-import { EVENT } from "@/lib/data";
+import { EVENT, VENUE } from "@/lib/data";
 
 export default function Hero() {
   return (
-    <section className="bg-glow relative overflow-hidden px-6 pb-24 pt-20 text-center">
+    <section className="relative overflow-hidden px-6 pb-24 pt-20 text-center">
+      {/* eslint-disable-next-line @next/next/no-img-element */}
+      <img
+        src={VENUE.photo}
+        alt=""
+        aria-hidden="true"
+        className="absolute inset-0 h-full w-full object-cover opacity-25"
+      />
+      <div className="bg-glow absolute inset-0" />
+      <div className="absolute inset-0 bg-gradient-to-t from-background via-background/85 to-background/40" />
 
-      <div className="mx-auto max-w-3xl animate-fade-up">
+      <div className="relative mx-auto max-w-3xl animate-fade-up">
         <span className="inline-block rounded-full border border-border bg-background-elevated px-4 py-1 text-xs font-medium tracking-wide text-foreground-muted">
           {EVENT.season} · {EVENT.tagline}
         </span>
