@@ -8,10 +8,11 @@ function easeOutExpo(t: number) {
 }
 
 // 喷泉水珠：从顶部喷口喷出的水滴，drift 控制左右偏移，delay 错开节奏
-const WATER_DROPLETS = Array.from({ length: 18 }, (_, i) => ({
+// 流钱效果：人民币纸钞像水一样从喷口连续喷涌而出（无旋转，保持流畅感）
+const MONEY_BILLS = Array.from({ length: 18 }, (_, i) => ({
   drift: -110 + i * 13,
   delay: (i % 9) * 0.16,
-  size: 5 + (i % 3) * 2,
+  scale: 0.85 + (i % 3) * 0.15,
 }));
 
 // 装饰闪光点：水面反光
@@ -88,6 +89,7 @@ export default function PrizePool() {
         </p>
 
         {/* 豪华三层喷泉：水珠从顶部喷口喷出，沿逐层水盆跌落 */}
+        {/* 豪华三层喷泉：人民币纸钞像水一样从顶部喷口连续喷涌，沿逐层水盆跌落 */}
         <div
           aria-hidden="true"
           className="pointer-events-none absolute inset-x-0 bottom-0 flex h-64 items-end justify-center overflow-visible"
@@ -113,27 +115,28 @@ export default function PrizePool() {
 
           {/* 逐层跌落的水帘 */}
           <span
-            className="water-stream absolute left-1/2 -translate-x-1/2"
+            className="money-stream absolute left-1/2 -translate-x-1/2"
             style={{ bottom: "144px", height: "34px" }}
           />
           <span
-            className="water-stream absolute left-1/2 -translate-x-1/2"
+            className="money-stream absolute left-1/2 -translate-x-1/2"
             style={{ bottom: "76px", height: "48px", animationDelay: "0.2s" }}
           />
 
-          {WATER_DROPLETS.map((d, i) => (
+          {MONEY_BILLS.map((d, i) => (
             <span
               key={i}
-              className="water-droplet"
+              className="money-flow"
               style={
                 {
                   "--drift": `${d.drift}px`,
-                  width: `${d.size}px`,
-                  height: `${d.size}px`,
+                  "--bill-scale": d.scale,
                   animationDelay: `${d.delay}s`,
                 } as React.CSSProperties
               }
-            />
+            >
+              💴
+            </span>
           ))}
 
           <svg

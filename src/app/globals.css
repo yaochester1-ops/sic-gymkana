@@ -70,7 +70,7 @@ body {
   animation: fade-up 0.6s ease-out both;
 }
 
-@keyframes water-spray {
+@keyframes money-spray {
   0% {
     transform: translate(-50%, 0) scale(0.3);
     opacity: 0;
@@ -79,23 +79,23 @@ body {
     opacity: 0.95;
   }
   46% {
-    transform: translate(calc(-50% + var(--drift, 0px)), -80px) scale(1);
-    opacity: 0.9;
+    transform: translate(calc(-50% + var(--drift, 0px)), -80px) scale(var(--bill-scale, 1));
+    opacity: 1;
   }
   100% {
-    transform: translate(calc(-50% + var(--drift, 0px) * 1.8), 60px) scale(0.4);
+    transform: translate(calc(-50% + var(--drift, 0px) * 1.8), 60px) scale(calc(var(--bill-scale, 1) * 0.55));
     opacity: 0;
   }
 }
 
-.water-droplet {
+.money-flow {
   position: absolute;
   left: 50%;
   bottom: 232px;
-  border-radius: 9999px;
-  background: radial-gradient(circle at 32% 28%, #ffffff 0%, #d8b4fe 45%, #86efac 100%);
-  box-shadow: 0 0 6px rgba(216, 180, 254, 0.55);
-  animation: water-spray 1.7s ease-in infinite;
+  font-size: 1.3rem;
+  line-height: 1;
+  filter: drop-shadow(0 0 4px rgba(134, 239, 172, 0.5));
+  animation: money-spray 1.7s ease-in infinite;
   will-change: transform, opacity;
 }
 
@@ -110,16 +110,16 @@ body {
   }
 }
 
-.water-stream {
+.money-stream {
   width: 4px;
   border-radius: 3px;
   background: repeating-linear-gradient(
     180deg,
-    rgba(216, 180, 254, 0.85) 0%,
+    rgba(250, 204, 21, 0.85) 0%,
     rgba(134, 239, 172, 0.85) 35%,
-    rgba(216, 180, 254, 0.2) 55%,
+    rgba(250, 204, 21, 0.2) 55%,
     rgba(134, 239, 172, 0.85) 80%,
-    rgba(216, 180, 254, 0.85) 100%
+    rgba(250, 204, 21, 0.85) 100%
   );
   background-size: 100% 220%;
   animation: stream-flow 0.7s linear infinite;
