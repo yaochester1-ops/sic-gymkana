@@ -75,15 +75,15 @@ body {
     transform: translate(-50%, 0) rotate(0deg) scale(0.5);
     opacity: 0;
   }
-  12% {
+  10% {
     opacity: 1;
   }
-  48% {
-    transform: translate(calc(-50% + var(--drift, 0px)), -58px) rotate(var(--spin, 15deg)) scale(1);
+  46% {
+    transform: translate(calc(-50% + var(--drift, 0px)), -78px) rotate(var(--spin, 15deg)) scale(1.1);
     opacity: 1;
   }
   100% {
-    transform: translate(calc(-50% + var(--drift, 0px) * 1.7), 38px) rotate(calc(var(--spin, 15deg) * 2)) scale(0.65);
+    transform: translate(calc(-50% + var(--drift, 0px) * 1.8), 58px) rotate(calc(var(--spin, 15deg) * 2)) scale(0.6);
     opacity: 0;
   }
 }
@@ -91,10 +91,10 @@ body {
 .money-particle {
   position: absolute;
   left: 50%;
-  bottom: 66px;
-  font-size: 1.2rem;
+  bottom: 232px;
+  font-size: 1.35rem;
   line-height: 1;
-  animation: money-spray 2.6s ease-in infinite;
+  animation: money-spray 2.8s ease-in infinite;
   will-change: transform, opacity;
 }
 
@@ -112,4 +112,21 @@ body {
 
 .fountain-base {
   animation: fountain-pulse 1.6s ease-in-out infinite;
+}
+
+@keyframes sparkle-twinkle {
+  0%,
+  100% {
+    opacity: 0;
+    transform: scale(0.5) rotate(0deg);
+  }
+  50% {
+    opacity: 1;
+    transform: scale(1.15) rotate(20deg);
+  }
+}
+
+.sparkle-twinkle {
+  animation: sparkle-twinkle 2.4s ease-in-out infinite;
+  will-change: transform, opacity;
 }
