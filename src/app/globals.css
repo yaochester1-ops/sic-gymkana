@@ -94,10 +94,10 @@ body {
   position: absolute;
   left: 50%;
   bottom: 60px;
-  font-size: 1.4rem;
+  font-size: 2.1rem;
   line-height: 1;
   filter: drop-shadow(0 0 4px rgba(134, 239, 172, 0.5));
-  animation: gun-blast 1.5s cubic-bezier(0.2, 0.7, 0.4, 1) infinite;
+  animation: gun-blast 2.8s cubic-bezier(0.2, 0.7, 0.4, 1) infinite;
   will-change: transform, opacity;
 }
 

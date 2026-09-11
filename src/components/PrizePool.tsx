@@ -33,9 +33,9 @@ const SPARKLES = [
 // 满屏美金雨：从页面顶部持续落下，像水一样铺满整个页面
 const DOLLAR_RAIN = Array.from({ length: 34 }, (_, i) => ({
   left: (i * 29) % 100,
-  duration: 6 + ((i * 13) % 7),
-  delay: -((i * 37) % 12),
-  size: 1 + ((i * 11) % 4) * 0.25,
+  duration: 10 + ((i * 13) % 9),
+  delay: -((i * 37) % 16),
+  size: 1.6 + ((i * 11) % 4) * 0.3,
   opacity: 0.16 + ((i * 7) % 4) * 0.06,
 }));
 
