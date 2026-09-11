@@ -169,75 +169,15 @@ export default function PrizePool() {
               </span>
             ))}
 
-            <svg viewBox="0 0 240 190" className="relative h-44 w-72">
-              <defs>
-                <linearGradient id="gunGradient" x1="0%" y1="0%" x2="100%" y2="100%">
-                  <stop offset="0%" stopColor="#9333ea" />
-                  <stop offset="100%" stopColor="#22c55e" />
-                </linearGradient>
-                <linearGradient id="gunRim" x1="0%" y1="0%" x2="100%" y2="0%">
-                  <stop offset="0%" stopColor="#e9d5ff" />
-                  <stop offset="100%" stopColor="#bbf7d0" />
-                </linearGradient>
-              </defs>
-
-              {/* 手枪式撒钱枪：握把 + 扳机护圈 + 枪身 + 枪管 + 扇形出钞口 */}
-              {/* 握把 */}
-              <path
-                d="M116 144 L98 144 L84 180 C83 184 86 187 90 186 L110 179 L118 148 Z"
-                fill="url(#gunGradient)"
-              />
-              <line x1="94" y1="152" x2="105" y2="149" stroke="#0a0f0c" strokeWidth="1.5" opacity="0.25" />
-              <line x1="91" y1="162" x2="102" y2="159" stroke="#0a0f0c" strokeWidth="1.5" opacity="0.25" />
-              <line x1="88" y1="172" x2="99" y2="169" stroke="#0a0f0c" strokeWidth="1.5" opacity="0.25" />
-
-              {/* 扳机护圈与扳机 */}
-              <path
-                d="M108 146 C102 146 98 150 98 156 C98 161 102 165 107 165"
-                fill="none"
-                stroke="url(#gunGradient)"
-                strokeWidth="5"
-                strokeLinecap="round"
-              />
-              <rect x="107" y="149" width="5" height="11" rx="2" fill="url(#gunGradient)" />
-
-              {/* 枪身主体 */}
-              <rect x="92" y="98" width="76" height="48" rx="9" fill="url(#gunGradient)" />
-              <rect x="92" y="98" width="76" height="9" rx="4" fill="url(#gunRim)" opacity="0.35" />
-
-              {/* 枪管 */}
-              <rect x="110" y="48" width="40" height="54" rx="7" fill="url(#gunGradient)" />
-              <rect x="106" y="42" width="48" height="12" rx="5" fill="url(#gunGradient)" />
-              <rect x="106" y="42" width="48" height="4" rx="2" fill="url(#gunRim)" opacity="0.5" />
-
-              {/* 扇形出钞口：一把钞票状叶片从枪口呈扇形展开 */}
-              <g transform="translate(130,44)">
-                {[-3, -2, -1, 0, 1, 2, 3].map((i) => (
-                  <rect
-                    key={i}
-                    x="-5"
-                    y="-46"
-                    width="10"
-                    height="46"
-                    rx="3"
-                    fill={i % 2 === 0 ? "url(#gunGradient)" : "url(#gunRim)"}
-                    opacity={i % 2 === 0 ? 0.95 : 0.8}
-                    transform={`rotate(${i * 13})`}
-                  />
-                ))}
-              </g>
-              <ellipse
-                className="fountain-base"
-                cx="130"
-                cy="44"
-                rx="30"
-                ry="6"
-                fill="none"
-                stroke="url(#gunRim)"
-                strokeWidth="2"
-                opacity="0.8"
-              />
-            </svg>
+            {/* 撒钱的源头直接换成奖金金额本身 */}
+            <div
+              className="fountain-base relative mb-6 flex items-center gap-1 rounded-full bg-gradient-to-br from-accent-purple to-accent-green px-8 py-4 font-display text-2xl font-bold text-white shadow-lg shadow-accent-green/30 sm:text-3xl"
+            >
+              <span>¥</span>
+              <span className="tabular-nums">
+                {displayValue.toLocaleString("zh-CN")}
+              </span>
+            </div>
           </div>
         </div>
       </section>
