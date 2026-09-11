@@ -7,23 +7,37 @@ function easeOutExpo(t: number) {
   return t === 1 ? 1 : 1 - Math.pow(2, -10 * t);
 }
 
-// 喷泉水珠：从顶部喷口喷出的水滴，drift 控制左右偏移，delay 错开节奏
-// 流钱效果：人民币纸钞像水一样从喷口连续喷涌而出（无旋转，保持流畅感）
-const MONEY_BILLS = Array.from({ length: 18 }, (_, i) => ({
-  drift: -110 + i * 13,
-  delay: (i % 9) * 0.16,
-  scale: 0.85 + (i % 3) * 0.15,
-}));
+// 撒钱枪：从中央炮口向左右两侧大范围扇形喷射美金
+const GUN_BILLS = Array.from({ length: 30 }, (_, i) => {
+  const side = i % 2 === 0 ? -1 : 1;
+  const spread = 40 + ((i * 53) % 190); // 左右扩散 40 ~ 230px
+  return {
+    drift: side * spread,
+    peak: -130 - ((i * 29) % 90), // 喷射高度 -130 ~ -220px
+    spin: side * (140 + ((i * 71) % 220)), // 大幅翻转，像被打出去一样
+    delay: (i % 12) * 0.13,
+    scale: 0.8 + ((i * 17) % 3) * 0.18,
+  };
+});
 
-// 装饰闪光点：水面反光
+// 装饰闪光点
 const SPARKLES = [
-  { x: -95, bottom: 210, delay: 0 },
-  { x: 100, bottom: 180, delay: 0.5 },
-  { x: -75, bottom: 110, delay: 1 },
-  { x: 90, bottom: 95, delay: 1.5 },
-  { x: -30, bottom: 235, delay: 0.8 },
-  { x: 35, bottom: 60, delay: 2 },
+  { x: -140, bottom: 200, delay: 0 },
+  { x: 150, bottom: 170, delay: 0.5 },
+  { x: -110, bottom: 100, delay: 1 },
+  { x: 130, bottom: 90, delay: 1.5 },
+  { x: -40, bottom: 225, delay: 0.8 },
+  { x: 50, bottom: 55, delay: 2 },
 ];
+
+// 满屏美金雨：从页面顶部持续落下，像水一样铺满整个页面
+const DOLLAR_RAIN = Array.from({ length: 34 }, (_, i) => ({
+  left: (i * 29) % 100,
+  duration: 6 + ((i * 13) % 7),
+  delay: -((i * 37) % 12),
+  size: 1 + ((i * 11) % 4) * 0.25,
+  opacity: 0.16 + ((i * 7) % 4) * 0.06,
+}));
 
 export default function PrizePool() {
   const [displayValue, setDisplayValue] = useState(0);
@@ -61,150 +75,149 @@ export default function PrizePool() {
   const digits = displayValue.toLocaleString("zh-CN").split("");
 
   return (
-    <section id="prize-pool" className="px-6 py-20">
+    <>
+      {/* 满屏美金雨背景，覆盖整个页面 */}
       <div
-        ref={sectionRef}
-        className="card-surface relative mx-auto flex max-w-3xl flex-col items-center overflow-hidden rounded-2xl px-8 pb-96 pt-14 text-center"
+        aria-hidden="true"
+        className="pointer-events-none fixed inset-0 overflow-hidden"
       >
-        <span className="text-xs font-medium uppercase tracking-[0.2em] text-foreground-muted">
-          滚动奖池
-        </span>
-
-        <div className="relative mt-4 flex items-center justify-center font-display text-5xl font-bold tabular-nums sm:text-6xl">
-          <span className="text-gradient mr-2">¥</span>
-          {digits.map((char, i) => (
-            <span
-              key={i}
-              className={
-                char === "," ? "text-foreground-muted" : "text-gradient"
-              }
-            >
-              {char}
-            </span>
-          ))}
-        </div>
-
-        <p className="relative mt-4 text-sm text-foreground-muted">
-          {PRIZE_POOL.updatedNote}
-        </p>
-
-        {/* 豪华三层喷泉：水珠从顶部喷口喷出，沿逐层水盆跌落 */}
-        {/* 豪华三层喷泉：人民币纸钞像水一样从顶部喷口连续喷涌，沿逐层水盆跌落 */}
-        <div
-          aria-hidden="true"
-          className="pointer-events-none absolute inset-x-0 bottom-0 flex h-64 items-end justify-center overflow-visible"
-        >
-          {/* 地面光晕 */}
-          <div className="absolute bottom-4 h-16 w-72 rounded-full bg-gradient-to-r from-accent-purple/30 via-accent-green/20 to-accent-purple/30 blur-2xl" />
-
-          {SPARKLES.map((s, i) => (
-            <span
-              key={i}
-              className="sparkle-twinkle absolute text-base"
-              style={
-                {
-                  left: `calc(50% + ${s.x}px)`,
-                  bottom: `${s.bottom}px`,
-                  animationDelay: `${s.delay}s`,
-                } as React.CSSProperties
-              }
-            >
-              ✨
-            </span>
-          ))}
-
-          {/* 逐层跌落的水帘 */}
+        {DOLLAR_RAIN.map((d, i) => (
           <span
-            className="money-stream absolute left-1/2 -translate-x-1/2"
-            style={{ bottom: "144px", height: "34px" }}
-          />
-          <span
-            className="money-stream absolute left-1/2 -translate-x-1/2"
-            style={{ bottom: "76px", height: "48px", animationDelay: "0.2s" }}
-          />
-
-          {MONEY_BILLS.map((d, i) => (
-            <span
-              key={i}
-              className="money-flow"
-              style={
-                {
-                  "--drift": `${d.drift}px`,
-                  "--bill-scale": d.scale,
-                  animationDelay: `${d.delay}s`,
-                } as React.CSSProperties
-              }
-            >
-              💴
-            </span>
-          ))}
-
-          <svg
-            viewBox="0 0 240 210"
-            className="relative h-64 w-72"
+            key={i}
+            className="dollar-rain absolute top-0"
+            style={
+              {
+                left: `${d.left}%`,
+                fontSize: `${d.size}rem`,
+                opacity: d.opacity,
+                animationDuration: `${d.duration}s`,
+                animationDelay: `${d.delay}s`,
+              } as React.CSSProperties
+            }
           >
-            <defs>
-              <linearGradient id="fountainGradient" x1="0%" y1="0%" x2="100%" y2="100%">
-                <stop offset="0%" stopColor="#9333ea" />
-                <stop offset="100%" stopColor="#22c55e" />
-              </linearGradient>
-              <linearGradient id="fountainRim" x1="0%" y1="0%" x2="100%" y2="0%">
-                <stop offset="0%" stopColor="#e9d5ff" />
-                <stop offset="100%" stopColor="#bbf7d0" />
-              </linearGradient>
-            </defs>
-
-            {/* 雕花底座 */}
-            <path
-              d="M40 196 C40 190 70 186 120 186 C170 186 200 190 200 196 C200 202 170 206 120 206 C70 206 40 202 40 196 Z"
-              fill="url(#fountainGradient)"
-              opacity="0.85"
-            />
-            <rect x="94" y="178" width="52" height="14" rx="2" fill="url(#fountainGradient)" opacity="0.9" />
-
-            {/* 第一层：底部大水盆 */}
-            <path
-              d="M14 178 C14 158 40 144 120 144 C200 144 226 158 226 178 C226 190 200 196 120 196 C40 196 14 190 14 178 Z"
-              fill="url(#fountainGradient)"
-            />
-            <ellipse cx="120" cy="178" rx="90" ry="13" fill="none" stroke="url(#fountainRim)" strokeWidth="2.5" opacity="0.8" />
-            <ellipse className="fountain-base" cx="120" cy="178" rx="78" ry="9" fill="url(#fountainGradient)" opacity="0.95" />
-
-            {/* 雕花立柱一（带凹槽装饰） */}
-            <rect x="110" y="108" width="20" height="40" rx="4" fill="url(#fountainGradient)" />
-            <line x1="116" y1="112" x2="116" y2="144" stroke="#0a0f0c" strokeWidth="1.5" opacity="0.35" />
-            <line x1="124" y1="112" x2="124" y2="144" stroke="#0a0f0c" strokeWidth="1.5" opacity="0.35" />
-
-            {/* 第二层：中部水盆 */}
-            <path
-              d="M62 108 C62 96 80 88 120 88 C160 88 178 96 178 108 C178 118 160 124 120 124 C80 124 62 118 62 108 Z"
-              fill="url(#fountainGradient)"
-            />
-            <ellipse cx="120" cy="108" rx="52" ry="9" fill="none" stroke="url(#fountainRim)" strokeWidth="2" opacity="0.8" />
-            <ellipse className="fountain-base" cx="120" cy="108" rx="44" ry="6" fill="url(#fountainGradient)" opacity="0.95" />
-
-            {/* 雕花立柱二 */}
-            <rect x="113" y="66" width="14" height="26" rx="3" fill="url(#fountainGradient)" />
-
-            {/* 第三层：顶部小水盆 */}
-            <path
-              d="M92 66 C92 59 104 54 120 54 C136 54 148 59 148 66 C148 72 136 76 120 76 C104 76 92 72 92 66 Z"
-              fill="url(#fountainGradient)"
-            />
-            <ellipse cx="120" cy="66" rx="26" ry="5.5" fill="none" stroke="url(#fountainRim)" strokeWidth="1.5" opacity="0.8" />
-            <ellipse className="fountain-base" cx="120" cy="66" rx="21" ry="3.5" fill="url(#fountainGradient)" opacity="0.95" />
-
-            {/* 顶部装饰球与皇冠喷口 */}
-            <circle cx="120" cy="42" r="11" fill="url(#fountainGradient)" />
-            <circle cx="120" cy="42" r="11" fill="none" stroke="url(#fountainRim)" strokeWidth="1.5" opacity="0.7" />
-            <path
-              d="M110 30 L113 22 L117 28 L120 18 L123 28 L127 22 L130 30 Z"
-              fill="url(#fountainGradient)"
-            />
-            <rect x="117" y="10" width="6" height="12" rx="2" fill="url(#fountainGradient)" />
-          </svg>
-        </div>
+            💵
+          </span>
+        ))}
       </div>
-    </section>
+
+      <section id="prize-pool" className="relative px-6 py-20">
+        <div
+          ref={sectionRef}
+          className="card-surface relative mx-auto flex max-w-3xl flex-col items-center overflow-hidden rounded-2xl px-8 pb-96 pt-14 text-center"
+        >
+          <span className="text-xs font-medium uppercase tracking-[0.2em] text-foreground-muted">
+            滚动奖池
+          </span>
+
+          <div className="relative mt-4 flex items-center justify-center font-display text-5xl font-bold tabular-nums sm:text-6xl">
+            <span className="text-gradient mr-2">¥</span>
+            {digits.map((char, i) => (
+              <span
+                key={i}
+                className={
+                  char === "," ? "text-foreground-muted" : "text-gradient"
+                }
+              >
+                {char}
+              </span>
+            ))}
+          </div>
+
+          <p className="relative mt-4 text-sm text-foreground-muted">
+            {PRIZE_POOL.updatedNote}
+          </p>
+
+          {/* 撒钱枪：一门大炮从正中央向左右两侧大范围喷射美金 */}
+          <div
+            aria-hidden="true"
+            className="pointer-events-none absolute inset-x-0 bottom-0 flex h-64 items-end justify-center overflow-visible"
+          >
+            {/* 地面光晕 */}
+            <div className="absolute bottom-4 h-16 w-80 rounded-full bg-gradient-to-r from-accent-purple/30 via-accent-green/20 to-accent-purple/30 blur-2xl" />
+
+            {SPARKLES.map((s, i) => (
+              <span
+                key={i}
+                className="sparkle-twinkle absolute text-base"
+                style={
+                  {
+                    left: `calc(50% + ${s.x}px)`,
+                    bottom: `${s.bottom}px`,
+                    animationDelay: `${s.delay}s`,
+                  } as React.CSSProperties
+                }
+              >
+                ✨
+              </span>
+            ))}
+
+            {GUN_BILLS.map((d, i) => (
+              <span
+                key={i}
+                className="gun-blast"
+                style={
+                  {
+                    "--drift": `${d.drift}px`,
+                    "--peak": `${d.peak}px`,
+                    "--spin": `${d.spin}deg`,
+                    "--bill-scale": d.scale,
+                    animationDelay: `${d.delay}s`,
+                  } as React.CSSProperties
+                }
+              >
+                💵
+              </span>
+            ))}
+
+            <svg viewBox="0 0 240 160" className="relative h-40 w-72">
+              <defs>
+                <linearGradient id="gunGradient" x1="0%" y1="0%" x2="100%" y2="100%">
+                  <stop offset="0%" stopColor="#9333ea" />
+                  <stop offset="100%" stopColor="#22c55e" />
+                </linearGradient>
+                <linearGradient id="gunRim" x1="0%" y1="0%" x2="100%" y2="0%">
+                  <stop offset="0%" stopColor="#e9d5ff" />
+                  <stop offset="100%" stopColor="#bbf7d0" />
+                </linearGradient>
+              </defs>
+
+              {/* 底座支架 */}
+              <path
+                d="M60 150 C60 142 85 138 120 138 C155 138 180 142 180 150 C180 156 155 160 120 160 C85 160 60 156 60 150 Z"
+                fill="url(#gunGradient)"
+                opacity="0.85"
+              />
+              <rect x="104" y="120" width="32" height="24" rx="4" fill="url(#gunGradient)" />
+
+              {/* 炮身主体 */}
+              <rect x="92" y="72" width="56" height="52" rx="10" fill="url(#gunGradient)" />
+              <ellipse cx="120" cy="124" rx="28" ry="7" fill="none" stroke="url(#gunRim)" strokeWidth="1.5" opacity="0.7" />
+
+              {/* 大喇叭炮口，向上扩张，暗示左右扇形喷射 */}
+              <path
+                d="M78 74 C78 50 96 26 120 26 C144 26 162 50 162 74 C162 82 144 76 120 76 C96 76 78 82 78 74 Z"
+                fill="url(#gunGradient)"
+              />
+              <ellipse
+                className="fountain-base"
+                cx="120"
+                cy="27"
+                rx="42"
+                ry="9"
+                fill="none"
+                stroke="url(#gunRim)"
+                strokeWidth="2.5"
+                opacity="0.85"
+              />
+              <ellipse cx="120" cy="27" rx="34" ry="6" fill="url(#gunGradient)" opacity="0.95" />
+
+              {/* 炮身装饰环 */}
+              <rect x="92" y="90" width="56" height="6" rx="3" fill="url(#gunRim)" opacity="0.5" />
+              <rect x="92" y="104" width="56" height="6" rx="3" fill="url(#gunRim)" opacity="0.5" />
+            </svg>
+          </div>
+        </div>
+      </section>
+    </>
   );
 }
