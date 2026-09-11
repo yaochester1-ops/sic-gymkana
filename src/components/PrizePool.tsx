@@ -7,34 +7,21 @@ function easeOutExpo(t: number) {
   return t === 1 ? 1 : 1 - Math.pow(2, -10 * t);
 }
 
-// 喷泉撒钱粒子：从喷泉顶部喷口喷出的纸钞/硬币，drift 控制左右偏移，spin 控制旋转，delay 错开节奏
-const MONEY_PARTICLES = [
-  { emoji: "💴", drift: -110, spin: -24, delay: 0 },
-  { emoji: "🪙", drift: -88, spin: 20, delay: 0.14 },
-  { emoji: "💴", drift: -64, spin: -16, delay: 0.28 },
-  { emoji: "🪙", drift: -40, spin: 24, delay: 0.42 },
-  { emoji: "💴", drift: -16, spin: -12, delay: 0.56 },
-  { emoji: "🪙", drift: 8, spin: 18, delay: 0.7 },
-  { emoji: "💴", drift: 30, spin: -20, delay: 0.84 },
-  { emoji: "🪙", drift: 54, spin: 14, delay: 0.98 },
-  { emoji: "💴", drift: 78, spin: -26, delay: 1.12 },
-  { emoji: "🪙", drift: 102, spin: 22, delay: 1.26 },
-  { emoji: "💴", drift: -50, spin: 16, delay: 1.4 },
-  { emoji: "🪙", drift: -24, spin: -18, delay: 1.54 },
-  { emoji: "💴", drift: 2, spin: 20, delay: 1.68 },
-  { emoji: "🪙", drift: 40, spin: -14, delay: 1.82 },
-  { emoji: "💴", drift: 66, spin: 12, delay: 1.96 },
-  { emoji: "🪙", drift: -76, spin: -22, delay: 2.1 },
-];
+// 喷泉水珠：从顶部喷口喷出的水滴，drift 控制左右偏移，delay 错开节奏
+const WATER_DROPLETS = Array.from({ length: 18 }, (_, i) => ({
+  drift: -110 + i * 13,
+  delay: (i % 9) * 0.16,
+  size: 5 + (i % 3) * 2,
+}));
 
-// 装饰闪光点，围绕喷泉原地闪烁
+// 装饰闪光点：水面反光
 const SPARKLES = [
-  { emoji: "✨", x: -95, bottom: 210, delay: 0 },
-  { emoji: "✨", x: 100, bottom: 180, delay: 0.5 },
-  { emoji: "✨", x: -75, bottom: 110, delay: 1 },
-  { emoji: "✨", x: 90, bottom: 95, delay: 1.5 },
-  { emoji: "✨", x: -30, bottom: 235, delay: 0.8 },
-  { emoji: "✨", x: 35, bottom: 60, delay: 2 },
+  { x: -95, bottom: 210, delay: 0 },
+  { x: 100, bottom: 180, delay: 0.5 },
+  { x: -75, bottom: 110, delay: 1 },
+  { x: 90, bottom: 95, delay: 1.5 },
+  { x: -30, bottom: 235, delay: 0.8 },
+  { x: 35, bottom: 60, delay: 2 },
 ];
 
 export default function PrizePool() {
@@ -100,7 +87,7 @@ export default function PrizePool() {
           {PRIZE_POOL.updatedNote}
         </p>
 
-        {/* 豪华喷泉撒钱动画：三层水盆 + 雕花底座 + 顶部球形喷口，钱币持续喷涌 */}
+        {/* 豪华三层喷泉：水珠从顶部喷口喷出，沿逐层水盆跌落 */}
         <div
           aria-hidden="true"
           className="pointer-events-none absolute inset-x-0 bottom-0 flex h-64 items-end justify-center overflow-visible"
@@ -120,24 +107,33 @@ export default function PrizePool() {
                 } as React.CSSProperties
               }
             >
-              {s.emoji}
+              ✨
             </span>
           ))}
 
-          {MONEY_PARTICLES.map((p, i) => (
+          {/* 逐层跌落的水帘 */}
+          <span
+            className="water-stream absolute left-1/2 -translate-x-1/2"
+            style={{ bottom: "144px", height: "34px" }}
+          />
+          <span
+            className="water-stream absolute left-1/2 -translate-x-1/2"
+            style={{ bottom: "76px", height: "48px", animationDelay: "0.2s" }}
+          />
+
+          {WATER_DROPLETS.map((d, i) => (
             <span
               key={i}
-              className="money-particle"
+              className="water-droplet"
               style={
                 {
-                  "--drift": `${p.drift}px`,
-                  "--spin": `${p.spin}deg`,
-                  animationDelay: `${p.delay}s`,
+                  "--drift": `${d.drift}px`,
+                  width: `${d.size}px`,
+                  height: `${d.size}px`,
+                  animationDelay: `${d.delay}s`,
                 } as React.CSSProperties
               }
-            >
-              {p.emoji}
-            </span>
+            />
           ))}
 
           <svg
