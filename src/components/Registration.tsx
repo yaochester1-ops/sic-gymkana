@@ -9,7 +9,7 @@ export default function Registration() {
           准备好上赛道了吗？
         </h2>
         <p className="mx-auto mt-4 max-w-md text-sm leading-relaxed text-foreground-muted">
-          填写报名信息，加入飞驰十三金卡纳，与全国顶尖车手同场竞速。提交后立即生成你的专属车手证。
+          填写报名信息，加入全民赛车大奖赛，与全国顶尖车手同场竞速。提交后立即生成你的专属车手证。
         </p>
 
         <div className="mt-8">

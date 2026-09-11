@@ -117,7 +117,7 @@ export default function DriverIdCard({
             <p className="text-[10px] text-foreground-muted">签发日期</p>
             <p className="text-xs text-foreground-muted">{driver.issuedAt}</p>
             <p className="mt-1 text-[10px] text-foreground-muted">
-              {EVENT.season} · SIC 飞驰十三金卡纳
+              {EVENT.season} · {EVENT.shortName}
             </p>
           </div>
           {qrDataUrl && (
