@@ -19,11 +19,18 @@ export default function Drivers() {
           <h2 className="mt-2 font-display text-3xl font-bold sm:text-4xl">
             参赛车手
           </h2>
-          <p className="mt-3 text-sm text-foreground-muted">
-            示例占位车手，点击头像查看车辆配置
-          </p>
+          {DRIVERS.length > 0 && (
+            <p className="mt-3 text-sm text-foreground-muted">
+              点击头像查看车辆配置
+            </p>
+          )}
         </div>
 
+        {DRIVERS.length === 0 ? (
+          <div className="card-surface rounded-2xl px-6 py-12 text-center">
+            <p className="text-base text-foreground-muted">暂无车手报名，期待你的加入！</p>
+          </div>
+        ) : (
         <div className="grid grid-cols-2 gap-4 sm:grid-cols-3 md:grid-cols-4">
           {DRIVERS.map((driver) => (
             <button
@@ -46,6 +53,7 @@ export default function Drivers() {
             </button>
           ))}
         </div>
+        )}
       </div>
 
       <DriverProfileModal

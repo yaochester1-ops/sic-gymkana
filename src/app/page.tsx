@@ -11,8 +11,8 @@ export default function Home() {
   return (
     <>
       <Hero />
-      <EventStats />
       <EventIntroduction />
+      <EventStats />
       <Venue />
       <Drivers />
       <PrizePool />

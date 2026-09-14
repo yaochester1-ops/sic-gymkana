@@ -32,8 +32,7 @@ export const PRIZE_POOL = {
   updatedNote: "奖池金额将随报名人数增加持续增长",
 };
 
-// 车手圈速榜 —— 示例占位数据，拿到真实车手成绩后按同样结构替换即可
-// 按最佳圈速从快到慢排序，rank 1 为全场最快圈速
+// 参赛车手资料 —— 当前暂无报名车手，确认真实报名后更新
 export type DriverEntry = {
   rank: number;
   name: string;
@@ -47,16 +46,7 @@ export type DriverEntry = {
   tires: string; // 轮胎
 };
 
-export const DRIVERS: DriverEntry[] = [
-  { rank: 1, name: "车手01", number: "13", nationality: "🇨🇳 中国", carModel: "本田 思域 Type R", penalty: "无罚时", bestLap: "52.318s", team: "闪电车队", horsepower: "320 匹", tires: "米其林 Pilot Sport 4S" },
-  { rank: 2, name: "车手02", number: "07", nationality: "🇨🇳 中国", carModel: "丰田 GR86", penalty: "无罚时", bestLap: "52.904s", team: "疾风车队", horsepower: "228 匹", tires: "普利司通 Potenza RE-71R" },
-  { rank: 3, name: "车手03", number: "22", nationality: "🇯🇵 日本", carModel: "大众 高尔夫 GTI", penalty: "+0.5s", bestLap: "53.117s", team: "涡轮车队", horsepower: "245 匹", tires: "邓禄普 Direzza ZIII" },
-  { rank: 4, name: "车手04", number: "18", nationality: "🇨🇳 中国", carModel: "宝马 M2", penalty: "无罚时", bestLap: "53.685s", team: "蓝天车队", horsepower: "460 匹", tires: "米其林 Pilot Sport Cup 2" },
-  { rank: 5, name: "车手05", number: "05", nationality: "🇨🇳 中国", carModel: "斯巴鲁 WRX STI", penalty: "+1.0s", bestLap: "54.220s", team: "拉力车队", horsepower: "310 匹", tires: "扬克斯 AD08R" },
-  { rank: 6, name: "车手06", number: "99", nationality: "🇩🇪 德国", carModel: "马自达 MX-5", penalty: "无罚时", bestLap: "54.891s", team: "转子车队", horsepower: "181 匹", tires: "东洋 Proxes R888R" },
-  { rank: 7, name: "车手07", number: "11", nationality: "🇨🇳 中国", carModel: "福特 福克斯 ST", penalty: "+0.5s", bestLap: "55.362s", team: "极速车队", horsepower: "280 匹", tires: "米其林 Pilot Sport 4S" },
-  { rank: 8, name: "车手08", number: "44", nationality: "🇰🇷 韩国", carModel: "现代 i30 N", penalty: "无罚时", bestLap: "55.940s", team: "新锐车队", horsepower: "275 匹", tires: "韩泰 Ventus R-S4" },
-];
+export const DRIVERS: DriverEntry[] = [];
 
 // 赛事规则 —— 占位内容，规则文本发给我之后会替换成正式版本
 export type RuleSection = {
