@@ -4,6 +4,13 @@ import { useEffect, useRef, useState } from "react";
 import QRCode from "qrcode";
 import { EVENT } from "@/lib/data";
 
+export type VehicleCategory = "two-wheel" | "four-wheel";
+
+export const CATEGORY_LABELS: Record<VehicleCategory, string> = {
+  "two-wheel": "两轮组",
+  "four-wheel": "四轮组",
+};
+
 export type RegisteredDriver = {
   name: string;
   age: string;
@@ -11,6 +18,7 @@ export type RegisteredDriver = {
   vehicle: string;
   number: string;
   issuedAt: string;
+  category: VehicleCategory;
 };
 
 export default function DriverIdCard({
@@ -70,7 +78,7 @@ export default function DriverIdCard({
                 {EVENT.shortName}
               </p>
               <p className="text-[10px] uppercase tracking-[0.2em] text-foreground-muted">
-                Driver License
+                {CATEGORY_LABELS[driver.category]} · Driver License
               </p>
             </div>
           </div>

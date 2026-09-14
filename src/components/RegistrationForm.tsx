@@ -1,15 +1,40 @@
 "use client";
 
 import { useState, type FormEvent } from "react";
-import DriverIdCard, { type RegisteredDriver } from "./DriverIdCard";
+import DriverIdCard, {
+  CATEGORY_LABELS,
+  type RegisteredDriver,
+  type VehicleCategory,
+} from "./DriverIdCard";
 
 const GENDERS = ["男", "女", "其他"];
+
+const CATEGORIES: {
+  value: VehicleCategory;
+  icon: string;
+  desc: string;
+  placeholder: string;
+}[] = [
+  {
+    value: "two-wheel",
+    icon: "🏍️",
+    desc: "摩托车绕桩竞速",
+    placeholder: "例如：雅马哈 R1",
+  },
+  {
+    value: "four-wheel",
+    icon: "🚗",
+    desc: "汽车绕桩竞速",
+    placeholder: "例如：本田 思域 Type R",
+  },
+];
 
 function randomDriverNumber() {
   return String(Math.floor(Math.random() * 90) + 10);
 }
 
 export default function RegistrationForm() {
+  const [category, setCategory] = useState<VehicleCategory | null>(null);
   const [name, setName] = useState("");
   const [age, setAge] = useState("");
   const [gender, setGender] = useState("");
@@ -19,6 +44,7 @@ export default function RegistrationForm() {
 
   const handleSubmit = (e: FormEvent) => {
     e.preventDefault();
+    if (!category) return;
 
     if (!name.trim() || !age.trim() || !gender || !vehicle.trim()) {
       setError("请完整填写姓名、年龄、性别与参赛车辆");
@@ -38,6 +64,7 @@ export default function RegistrationForm() {
       vehicle: vehicle.trim(),
       number: randomDriverNumber(),
       issuedAt: new Date().toLocaleDateString("zh-CN"),
+      category,
     });
   };
 
@@ -60,11 +87,47 @@ export default function RegistrationForm() {
     );
   }
 
+  if (!category) {
+    return (
+      <div className="mx-auto grid max-w-md gap-4 sm:grid-cols-2">
+        {CATEGORIES.map((c) => (
+          <button
+            key={c.value}
+            type="button"
+            onClick={() => setCategory(c.value)}
+            className="card-surface flex flex-col items-center gap-2 rounded-2xl px-6 py-8 text-center transition-transform hover:-translate-y-1 hover:border-accent-purple-light"
+          >
+            <span className="text-4xl">{c.icon}</span>
+            <span className="font-display text-lg font-bold">
+              {CATEGORY_LABELS[c.value]}
+            </span>
+            <span className="text-xs text-foreground-muted">{c.desc}</span>
+          </button>
+        ))}
+      </div>
+    );
+  }
+
+  const activeCategory = CATEGORIES.find((c) => c.value === category)!;
+
   return (
     <form
       onSubmit={handleSubmit}
       className="mx-auto flex max-w-md flex-col gap-4 text-left"
     >
+      <div className="flex items-center justify-between">
+        <span className="inline-flex items-center gap-1.5 rounded-full bg-gradient-to-r from-accent-purple to-accent-green px-3 py-1 text-xs font-semibold text-white">
+          {activeCategory.icon} {CATEGORY_LABELS[category]}
+        </span>
+        <button
+          type="button"
+          onClick={() => setCategory(null)}
+          className="text-xs text-foreground-muted underline underline-offset-2 hover:text-foreground"
+        >
+          重新选择通道
+        </button>
+      </div>
+
       <div>
         <label className="mb-1.5 block text-xs text-foreground-muted">
           姓名
@@ -123,7 +186,7 @@ export default function RegistrationForm() {
           type="text"
           value={vehicle}
           onChange={(e) => setVehicle(e.target.value)}
-          placeholder="例如：本田 思域 Type R"
+          placeholder={activeCategory.placeholder}
           className="w-full rounded-xl border border-border bg-background px-4 py-2.5 text-sm text-foreground outline-none transition-colors focus:border-accent-purple-light"
         />
       </div>

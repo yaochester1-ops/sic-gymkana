@@ -35,7 +35,7 @@ export default function Hero() {
             立即报名参赛
           </Link>
           <Link
-            href="/leaderboard"
+            href="/#leaderboard"
             className="w-full rounded-full border border-border px-8 py-3 text-sm font-semibold text-foreground transition-colors hover:border-accent-purple-light hover:text-accent-purple-light sm:w-auto"
           >
             查看圈速榜

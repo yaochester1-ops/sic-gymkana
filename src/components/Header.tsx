@@ -28,7 +28,8 @@ export default function Header() {
 
         <nav className="hidden items-center gap-1 md:flex">
           {NAV_LINKS.map((link) => {
-            const active = pathname === link.href;
+            const active =
+              !link.href.startsWith("/#") && pathname === link.href;
             return (
               <Link
                 key={link.href}
@@ -97,7 +98,8 @@ export default function Header() {
         <nav className="border-t border-border bg-background px-6 py-3 md:hidden">
           <div className="mx-auto flex max-w-6xl flex-col gap-1">
             {NAV_LINKS.map((link) => {
-              const active = pathname === link.href;
+              const active =
+              !link.href.startsWith("/#") && pathname === link.href;
               return (
                 <Link
                   key={link.href}
