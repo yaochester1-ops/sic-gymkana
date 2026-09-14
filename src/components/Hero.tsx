@@ -23,6 +23,10 @@ export default function Hero() {
           <span className="text-gradient">{EVENT.name}</span>
         </h1>
 
+        <p className="mx-auto mt-5 max-w-2xl text-base font-medium leading-8 text-foreground sm:text-xl">
+          全民赛车文化的开始 无门槛参加 以大奖赛形式聚集周边所有喜欢汽车的朋友
+        </p>
+
         <p className="mx-auto mt-6 max-w-xl text-base leading-relaxed text-foreground-muted sm:text-lg">
           {EVENT.description}
         </p>
