@@ -86,7 +86,6 @@ export const RULES: RuleSection[] = [
 export const NAV_LINKS = [
   { label: "首页", href: "/" },
   { label: "赛事地点", href: "/#venue" },
-  { label: "圈速榜", href: "/#leaderboard" },
   { label: "奖池", href: "/#prize-pool" },
   { label: "规则", href: "/#rules" },
   { label: "车手", href: "/#drivers" },

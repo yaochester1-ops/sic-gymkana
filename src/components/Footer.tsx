@@ -5,7 +5,7 @@ const LINK_COLUMNS = [
   {
     title: "赛事",
     links: NAV_LINKS.filter((l) =>
-      ["/#venue", "/#leaderboard", "/#prize-pool", "/#rules"].includes(l.href)
+      ["/#venue", "/#prize-pool", "/#rules"].includes(l.href)
     ),
   },
   {
