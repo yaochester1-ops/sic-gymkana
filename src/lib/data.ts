@@ -8,7 +8,7 @@ export const EVENT = {
   tagline: "精准操控 · 极限圈速",
   season: "2026 赛季",
   description:
-    "全民赛车大奖赛是一项面向专业与业余车手开放的场地绕桩竞速赛事，我们相信精准操控与极限圈速的极致融合。加入我们，见证每一圈的极限突破。",
+    "全年 12 站，每 30 天更换赛道布局与榜单。188 元挑战 4 圈，取最好成绩上榜；每人次为月奖池注入 35 元、年奖池注入 15 元。两轮或四轮，让每一份热爱都能参与全民赛车。",
 };
 
 // 赛事地点 —— 场馆名称、实景图片与导航链接已确认，详细门牌地址待补充后替换 addressNote 即可
@@ -85,6 +85,7 @@ export const RULES: RuleSection[] = [
 
 export const NAV_LINKS = [
   { label: "首页", href: "/" },
+  { label: "赛事介绍", href: "/#introduction" },
   { label: "赛事地点", href: "/#venue" },
   { label: "奖池", href: "/#prize-pool" },
   { label: "规则", href: "/#rules" },

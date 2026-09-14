@@ -1,4 +1,5 @@
 import Hero from "@/components/Hero";
+import EventIntroduction from "@/components/EventIntroduction";
 import EventStats from "@/components/EventStats";
 import Venue from "@/components/Venue";
 import Drivers from "@/components/Drivers";
@@ -11,6 +12,7 @@ export default function Home() {
     <>
       <Hero />
       <EventStats />
+      <EventIntroduction />
       <Venue />
       <Drivers />
       <PrizePool />
