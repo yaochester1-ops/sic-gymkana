@@ -5,12 +5,12 @@ const LINK_COLUMNS = [
   {
     title: "赛事",
     links: NAV_LINKS.filter((l) =>
-      ["/#venue", "/#prize-pool", "/#rules"].includes(l.href)
+      ["/#introduction", "/#venue", "/#prize-pool"].includes(l.href)
     ),
   },
   {
     title: "参与",
-    links: NAV_LINKS.filter((l) => ["/#drivers", "/registration"].includes(l.href)),
+    links: NAV_LINKS.filter((l) => ["/registration"].includes(l.href)),
   },
 ];
 

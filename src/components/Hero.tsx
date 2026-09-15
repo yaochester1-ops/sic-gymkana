@@ -27,9 +27,6 @@ export default function Hero() {
           全民赛车文化的开始 无门槛参加 以大奖赛形式聚集周边所有喜欢汽车的朋友
         </p>
 
-        <p className="mx-auto mt-6 max-w-xl text-base leading-relaxed text-foreground-muted sm:text-lg">
-          {EVENT.description}
-        </p>
 
         <div className="mt-10 flex flex-col items-center justify-center gap-4 sm:flex-row">
           <Link

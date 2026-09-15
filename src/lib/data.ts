@@ -78,7 +78,5 @@ export const NAV_LINKS = [
   { label: "赛事介绍", href: "/#introduction" },
   { label: "赛事地点", href: "/#venue" },
   { label: "奖池", href: "/#prize-pool" },
-  { label: "规则", href: "/#rules" },
-  { label: "车手", href: "/#drivers" },
   { label: "报名", href: "/registration" },
 ];

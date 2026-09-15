@@ -7,28 +7,34 @@ function easeOutExpo(t: number) {
   return t === 1 ? 1 : 1 - Math.pow(2, -10 * t);
 }
 
-// 撒钱枪：从中央炮口向左右两侧大范围扇形喷射美金
-const GUN_BILLS = Array.from({ length: 30 }, (_, i) => {
-  const side = i % 2 === 0 ? -1 : 1;
-  const spread = 40 + ((i * 53) % 190); // 左右扩散 40 ~ 230px
-  return {
-    drift: side * spread,
-    peak: -130 - ((i * 29) % 90), // 喷射高度 -130 ~ -220px
-    spin: side * (140 + ((i * 71) % 220)), // 大幅翻转，像被打出去一样
-    delay: (i % 12) * 0.13,
-    scale: 0.8 + ((i * 17) % 3) * 0.18,
-  };
-});
+// 两侧发钱枪分别向内上方喷射钞票。
+const GUN_BILLS = Array.from({ length: 18 }, (_, i) => ({
+  drift: 25 + ((i * 37) % 95),
+  peak: -100 - ((i * 29) % 110),
+  spin: 100 + ((i * 71) % 220),
+  delay: -(i * 0.23),
+  scale: 0.8 + (i % 3) * 0.18,
+}));
 
-// 装饰闪光点
-const SPARKLES = [
-  { x: -140, bottom: 200, delay: 0 },
-  { x: 150, bottom: 170, delay: 0.5 },
-  { x: -110, bottom: 100, delay: 1 },
-  { x: 130, bottom: 90, delay: 1.5 },
-  { x: -40, bottom: 225, delay: 0.8 },
-  { x: 50, bottom: 55, delay: 2 },
-];
+function MoneyGun({ side }: { side: "left" | "right" }) {
+  return (
+    <svg viewBox="0 0 240 170" className={`money-gun money-gun--${side}`}>
+      <g transform={side === "right" ? "translate(240 0) scale(-1 1)" : undefined}>
+        <path d="M78 89h57l-10 65H84l9-46H78Z" fill="#a30718" stroke="#ff6975" strokeWidth="2" />
+        <path d="M130 95h24v26h-24" fill="none" stroke="#e51c32" strokeWidth="9" />
+        <path d="M20 38 39 22h142l24 20v57H20Z" fill="#ed1c24" stroke="#ff6975" strokeWidth="2" />
+        <path d="M39 22h142l24 20H20Z" fill="#ff4b55" />
+        <path d="M181 22 205 42v57l-24-12Z" fill="#b60819" />
+        <rect x="195" y="42" width="31" height="45" rx="5" fill="#650811" stroke="#ff6975" strokeWidth="2" />
+        <path d="M216 50h10v26h-10Z" fill="#21090d" />
+        <path d="m207 49 27-6 3 19-28 6Z" fill="#d6f3bf" stroke="#60975f" strokeWidth="2" />
+        <path d="m216 51 15-3m-13 9 15-3" stroke="#60975f" strokeWidth="2" />
+        <path d="M29 91h141" stroke="#ff8189" strokeWidth="2" />
+      </g>
+      <text x={side === "left" ? 100 : 140} y="76" textAnchor="middle" fill="white" fontFamily="Arial, sans-serif" fontSize="29" fontWeight="900" fontStyle="italic" letterSpacing="-1.6">Supreme</text>
+    </svg>
+  );
+}
 
 // 满屏美金雨：从页面顶部持续落下，像水一样铺满整个页面
 const DOLLAR_RAIN = Array.from({ length: 34 }, (_, i) => ({
@@ -127,57 +133,30 @@ export default function PrizePool() {
             {PRIZE_POOL.updatedNote}
           </p>
 
-          {/* 撒钱枪：一门大炮从正中央向左右两侧大范围喷射美金 */}
-          <div
-            aria-hidden="true"
-            className="pointer-events-none absolute inset-x-0 bottom-0 flex h-64 items-end justify-center overflow-visible"
-          >
-            {/* 地面光晕 */}
-            <div className="absolute bottom-4 h-16 w-80 rounded-full bg-gradient-to-r from-accent-purple/30 via-accent-green/20 to-accent-purple/30 blur-2xl" />
-
-            {SPARKLES.map((s, i) => (
-              <span
-                key={i}
-                className="sparkle-twinkle absolute text-base"
-                style={
-                  {
-                    left: `calc(50% + ${s.x}px)`,
-                    bottom: `${s.bottom}px`,
-                    animationDelay: `${s.delay}s`,
-                  } as React.CSSProperties
-                }
-              >
-                ✨
-              </span>
+          <div aria-hidden="true" className="pointer-events-none absolute inset-x-0 bottom-0 h-72 overflow-visible">
+            <div className="absolute bottom-5 left-[10%] h-14 w-4/5 rounded-full bg-red-600/20 blur-2xl" />
+            {(["left", "right"] as const).map((side) => (
+              <div key={side}>
+                {GUN_BILLS.map((bill, i) => (
+                  <span
+                    key={i}
+                    className="gun-blast"
+                    style={{
+                      left: side === "left" ? "32%" : "68%",
+                      bottom: "145px",
+                      "--drift": `${bill.drift * (side === "left" ? 1 : -1)}px`,
+                      "--peak": `${bill.peak}px`,
+                      "--spin": `${bill.spin * (side === "left" ? 1 : -1)}deg`,
+                      "--bill-scale": bill.scale,
+                      animationDelay: `${bill.delay - (side === "right" ? 0.12 : 0)}s`,
+                    } as React.CSSProperties}
+                  >
+                    💵
+                  </span>
+                ))}
+                <MoneyGun side={side} />
+              </div>
             ))}
-
-            {GUN_BILLS.map((d, i) => (
-              <span
-                key={i}
-                className="gun-blast"
-                style={
-                  {
-                    "--drift": `${d.drift}px`,
-                    "--peak": `${d.peak}px`,
-                    "--spin": `${d.spin}deg`,
-                    "--bill-scale": d.scale,
-                    animationDelay: `${d.delay}s`,
-                  } as React.CSSProperties
-                }
-              >
-                💵
-              </span>
-            ))}
-
-            {/* 撒钱的源头直接换成奖金金额本身 */}
-            <div
-              className="fountain-base relative mb-6 flex items-center gap-1 rounded-full bg-gradient-to-br from-accent-purple to-accent-green px-8 py-4 font-display text-2xl font-bold text-white shadow-lg shadow-accent-green/30 sm:text-3xl"
-            >
-              <span>¥</span>
-              <span className="tabular-nums">
-                {displayValue.toLocaleString("zh-CN")}
-              </span>
-            </div>
           </div>
         </div>
       </section>

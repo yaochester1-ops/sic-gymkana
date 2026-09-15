@@ -151,3 +151,29 @@ body {
   animation: sparkle-twinkle 2.4s ease-in-out infinite;
   will-change: transform, opacity;
 }
+
+
+.money-gun {
+  position: absolute;
+  bottom: 12px;
+  width: clamp(130px, 34%, 240px);
+  height: auto;
+  filter: drop-shadow(0 12px 16px rgb(0 0 0 / 45%));
+}
+
+.money-gun--left {
+  left: 3%;
+  transform: rotate(-22deg);
+}
+
+.money-gun--right {
+  right: 3%;
+  transform: rotate(22deg);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .gun-blast, .dollar-rain, .sparkle-twinkle {
+    animation: none;
+    opacity: 0;
+  }
+}
